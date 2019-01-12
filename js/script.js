@@ -13,10 +13,42 @@ FSJS project 1 - A Random Quote Generator
 
   Recommended: 
     - Add at least one `year` and/or `citation` property to at least one 
-      quote object.
+      quote object.   
 ***/
 
-
+var quotes = [
+    {
+        //Scenerio #1: citation and year exist - works
+        quote: "If you can dream it, you can do it.", 
+        source: "Walt Disney", 
+        citation: "Success.com",
+        year: "1980"
+    },
+    {
+        //Scenerio #2: only citation exists - works
+        quote: "Do not wait; the time will never be ‘just right.’ Start where you stand, and work with whatever tools you may have at your command, and better tools will be found as you go along.", 
+        source: "George Herbert", 
+        citation: "Success.com"
+    },
+    {
+        quote: "There will be obstacles. There will be doubters. There will be mistakes. But with hard work, there are no limits.",
+        source: "George Herbert", 
+        //citation: "Success.com",
+    },
+    {
+        //Scenerio #4: neither citation nor year exist  - works 
+        quote: "Hardships often prepare ordinary people for an extraordinary destiny.",
+        source: "C.S. Lewis", 
+        //citation: "MotivationPing.com"
+    },
+    {
+        //Scenerio #3: only year exists - works
+        quote: "Perfection is not attainable, but if we chase perfection we can catch excellence.",
+        source: "Vince Lombardi", 
+        //citation: "MotivationPing.com"
+        year: "1961"
+    }
+];
 
 
 /***
@@ -26,8 +58,9 @@ FSJS project 1 - A Random Quote Generator
      `quotes` array.
 ***/
 
-
-
+function getRandomQuote() {
+    return Math.floor((Math.random() * 5));
+}
 
 /***
   Create the `printQuote` function to: 
@@ -39,8 +72,35 @@ FSJS project 1 - A Random Quote Generator
    - set the `innerHTML` of the `quote-box` div to the HTML string. 
 ***/
 
+function printQuote() {
+    var randomQuote = getRandomQuote();
+    var printedQuote = "<p class=\"quote\">" + quotes[randomQuote].quote + "</p>";
+    printedQuote += "<p class=\"source\">" + quotes[randomQuote].source;
+    
+    //Scenerio #1: citation and year exist
+    if (quotes[randomQuote].citation !== undefined && quotes[randomQuote].year !== undefined) {
+        printedQuote += "<span class=\"citation\">" + quotes[randomQuote].citation + "</span>" 
+        printedQuote += "<span class=\"year\">" + quotes[randomQuote].year + "</span></p>" 
+    
+    //Scenerio #2: only citation exists
+    } else if (quotes[randomQuote].citation !== undefined)  {
+    printedQuote += "<span class=\"citation\">" + quotes[randomQuote].citation+ "</span></p>" 
+    
+    //Scenerio #3: only year exists
+    } else if (quotes[randomQuote].year !== undefined)  {
+        printedQuote += "<span class=\"year\">" + quotes[randomQuote].year + "</span></p>" 
+        
+    //Scenerio #4: neither citation nor year exist   
+    } else {
+        printedQuote += "</p>";
+    }
+    return printedQuote;
+}
 
-
+/*
+      <p class="quote">Every great developer you know got there by solving problems they were unqualified to solve until they actually did it.</p>
+      <p class="source">Patrick McKenzie<span class="citation">Twitter</span><span class="year">2016</span></p>
+*/
 
 /***
   When the "Show another quote" button is clicked, the event listener 
