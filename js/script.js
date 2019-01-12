@@ -3,7 +3,6 @@ Treehouse Techdegree:
 FSJS project 1 - A Random Quote Generator
 ******************************************/
 
-//Array of quote objects
 var quotes = [
     {
         //Scenerio #1: citation and year exist - works
@@ -21,22 +20,36 @@ var quotes = [
     {
         quote: "There will be obstacles. There will be doubters. There will be mistakes. But with hard work, there are no limits.",
         source: "George Herbert", 
-        //citation: "Success.com",
+        citation: "Success.com",
     },
     {
         //Scenerio #4: neither citation nor year exist  - works 
         quote: "Hardships often prepare ordinary people for an extraordinary destiny.",
         source: "C.S. Lewis", 
-        //citation: "MotivationPing.com"
     },
     {
         //Scenerio #3: only year exists - works
         quote: "Perfection is not attainable, but if we chase perfection we can catch excellence.",
         source: "Vince Lombardi", 
-        //citation: "MotivationPing.com"
         year: "1961"
     }
 ];
+
+//Declare global timer variable and timerFunction
+var timer1;
+function timerFunction() {
+    printQuote();
+}
+
+//random color function from StackOverflow - https://stackoverflow.com/questions/1484506/random-color-generator
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
 //Function to generate a random quote object
 function getRandomQuote() {
@@ -45,6 +58,9 @@ function getRandomQuote() {
 
 //Function to generate quote string and randomly display different quotes
 function printQuote() {
+    //clear timer at start of function
+    clearTimeout(timer1);
+    
     var randomQuote = getRandomQuote();
     var printedQuote = "<p class=\"quote\">" + randomQuote.quote + "</p>";
     printedQuote += "<p class=\"source\">" + randomQuote.source;
@@ -66,7 +82,13 @@ function printQuote() {
     
     //Replace HTML in #quote-box with printedQuote string
     document.getElementById("quote-box").innerHTML = printedQuote;
+    
+    //Change background color when quote changes
+    document.body.style.backgroundColor = getRandomColor();
+    
+    //start timer at end of function
+    timer1 = setTimeout(timerFunction, 5000)
 }
 
-//Call printQuote function on button clikc
+//Call printQuote function on button click
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
